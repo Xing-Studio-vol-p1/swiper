@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>Swiper + PhotoSwipe (CDN Demo)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- PhotoSwipe v5 CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5/dist/photoswipe.css" />
+
+  <style>
+    /* 頁面基礎樣式（可自行調整） */
+    body { margin: 0; font-family: system-ui, -apple-system, "Noto Sans TC", Arial, sans-serif; background:#0b0b0c; color:#fff; }
+    .page-wrap { max-width: 1100px; margin: 32px auto; padding: 0 16px; }
+    h1 { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
+
+    /* Swiper 容器尺寸 */
+    .swiper { width: 100%; }
+    .swiper.main { height: 58vh; min-height: 360px; border-radius: 14px; overflow: hidden; }
+    .swiper.thumbs { margin-top: 12px; height: 120px; }
+
+    /* slide 內的圖 */
+    .swiper-slide a { display:block; width:100%; height:100%; position:relative; }
+    .swiper-slide img {
+      width: 100%; height: 100%; object-fit: cover; display:block;
+      user-select: none; -webkit-user-drag: none;
+    }
+
+    /* 縮圖列（thumbs）外觀 */
+    .swiper.thumbs .swiper-slide { opacity: 0.5; cursor: pointer; border-radius: 8px; overflow: hidden; }
+    .swiper.thumbs .swiper-slide-thumb-active { opacity: 1; box-shadow: 0 0 0 2px rgba(255,255,255,.85) inset; }
+
+    /* 導箭頭在深色背景的可見度 */
+    .swiper-button-prev, .swiper-button-next { color: #fff; }
+    .swiper-pagination-bullet { background:#fff; opacity: .6; }
+    .swiper-pagination-bullet-active { opacity: 1; }
+
+    /* 讓 PhotoSwipe 的背景跟頁面風格更一致（可選） */
+    .pswp__bg { background: rgba(7,7,8,.96); }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <h1>Swiper + PhotoSwipe (CDN Demo)</h1>
+
+    <!-- 大圖 Swiper -->
+    <div class="swiper main" id="swiperMain">
+      <div class="swiper-wrapper" id="gallery">
+        <!--
+          每個 slide 用 <a> 包住 <img>
+          PhotoSwipe v5 要求 a 上帶 data-pswp-width / data-pswp-height 才能做平滑 zoom 動畫
+          href 指向大圖（可與縮圖不同）
+        -->
+
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+          <a
+            href="https://picsum.photos/id/1015/1600/1066"
+            data-pswp-width="1600"
+            data-pswp-height="1066"
+            data-cropped="true"
+            target="_blank"
+          >
+            <img src="https://picsum.photos/id/1015/1100/700" alt="Sample 1" loading="lazy" />
+          </a>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+          <a
+            href="https://picsum.photos/id/1016/1600/1066"
+            data-pswp-width="1600"
+            data-pswp-height="1066"
+            data-cropped="true"
+            target="_blank"
+          >
+            <img src="https://picsum.photos/id/1016/1100/700" alt="Sample 2" loading="lazy" />
+          </a>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+          <a
+            href="https://picsum.photos/id/1025/1600/1066"
+            data-pswp-width="1600"
+            data-pswp-height="1066"
+            data-cropped="true"
+            target="_blank"
+          >
+            <img src="https://picsum.photos/id/1025/1100/700" alt="Sample 3" loading="lazy" />
+          </a>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="swiper-slide">
+          <a
+            href="https://picsum.photos/id/1036/1600/1066"
+            data-pswp-width="1600"
+            data-pswp-height="1066"
+            data-cropped="true"
+            target="_blank"
+          >
+            <img src="https://picsum.photos/id/1036/1100/700" alt="Sample 4" loading="lazy" />
+          </a>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="swiper-slide">
+          <a
+            href="https://picsum.photos/id/1043/1600/1066"
+            data-pswp-width="1600"
+            data-pswp-height="1066"
+            data-cropped="true"
+            target="_blank"
+          >
+            <img src="https://picsum.photos/id/1043/1100/700" alt="Sample 5" loading="lazy" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Swiper 控制 -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev" aria-label="Previous"></div>
+      <div class="swiper-button-next" aria-label="Next"></div>
+    </div>
+
+    <!-- 縮圖 Swiper（與主輪播連動） -->
+    <div class="swiper thumbs" id="swiperThumbs">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1015/240/150" alt="Thumb 1" /></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1016/240/150" alt="Thumb 2" /></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1025/240/150" alt="Thumb 3" /></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1036/240/150" alt="Thumb 4" /></div>
+        <div class="swiper-slide"><img src="https://picsum.photos/id/1043/240/150" alt="Thumb 5" /></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- ✅ 建議：jsDelivr + UMD 版 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css" />
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/umd/photoswipe.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/umd/photoswipe-lightbox.umd.min.js"></script>
+
+  <script>
+    // 1) 先建縮圖 Swiper
+    const thumbsSwiper = new Swiper('#swiperThumbs', {
+      slidesPerView: 5,
+      spaceBetween: 8,
+      freeMode: true,
+      watchSlidesProgress: true,
+      preloadImages: false,
+      lazy: true,
+      breakpoints: {
+        0: { slidesPerView: 4 },
+        768: { slidesPerView: 5 }
+      }
+    });
+
+    // 2) 主 Swiper 與縮圖連動
+    const mainSwiper = new Swiper('#swiperMain', {
+      loop: true, // 視覺無縫循環
+      spaceBetween: 8,
+      centeredSlides: false,
+      watchSlidesProgress: true,
+      thumbs: { swiper: thumbsSwiper },
+      keyboard: { enabled: true },
+      mousewheel: false,
+      preloadImages: false,
+      lazy: true,
+      pagination: { el: '.swiper-pagination', clickable: true },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+    });
+
+    // 3) PhotoSwipe Lightbox
+    //    注意：selector 指向「主輪播裡面的 <a>」
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#gallery',
+      children: 'a',
+      // 平滑 zoom 動畫（若要更快/更順可調整 duration）
+      showHideAnimationType: 'fade', // 'zoom' | 'fade' | 'none'
+      showAnimationDuration: 300,
+      hideAnimationDuration: 200,
+      // 預載相鄰圖片讓切換更順
+      preload: [1, 2],
+      // 必要：告訴 lightbox 要載入的核心模組
+      pswpModule: PhotoSwipe
+    });
+
+    // 與 Swiper 點擊行為相容：只在「非拖曳」情況下開啟 lightbox
+    // Swiper 會在拖曳時把 click 當成滑動，我們藉由 isMoved 判斷
+    document.getElementById('swiperMain').addEventListener('click', (e) => {
+      const slide = e.target.closest('.swiper-slide');
+      const link = e.target.closest('a');
+      if (!slide || !link) return;
+      // 如果剛剛是拖曳就不要打開
+      if (mainSwiper.isDragging || mainSwiper.isTransitioning || mainSwiper.animating) return;
+      e.preventDefault();
+      link.click(); // 讓 PhotoSwipeLightbox 的委派監聽去處理
+    }, true);
+
+    lightbox.init();
+
+    //（可選）當 lightbox 開啟時把 Swiper 停住，避免背景還能滑
+    lightbox.on('open', () => {
+      mainSwiper.allowTouchMove = false;
+      thumbsSwiper.allowTouchMove = false;
+    });
+    lightbox.on('close', () => {
+      mainSwiper.allowTouchMove = true;
+      thumbsSwiper.allowTouchMove = true;
+    });
+  </script>
+</body>
+</html>
