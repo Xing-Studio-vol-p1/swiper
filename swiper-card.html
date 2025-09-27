@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>Swiper 翻牌卡片 Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif;
+      background: #f5f5f5;
+    }
+    .swiper {
+      width: 100%;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 40px 0;
+    }
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* 卡片基本樣式 */
+    .card {
+      width: 260px;
+      height: 360px;
+      perspective: 1000px;
+    }
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .card-front {
+      background: #007aff;
+    }
+    .card-back {
+      background: #ff3b30;
+      transform: rotateY(180deg);
+    }
+
+    /* hover 翻牌 (只在大於1200px時生效) */
+    @media (min-width: 1201px) {
+      .card:hover .card-inner {
+        transform: rotateY(180deg);
+      }
+    }
+
+    /* 小於等於1200px 禁止翻牌 */
+    @media (max-width: 1200px) {
+      .card-inner {
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Swiper -->
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">Card 1</div>
+            <div class="card-back">Back 1</div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">Card 2</div>
+            <div class="card-back">Back 2</div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide">
+        <div class="card">
+          <div class="card-inner">
+            <div class="card-front">Card 3</div>
+            <div class="card-back">Back 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Swiper 控制 -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // 初始化 Swiper
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      }
+    });
+
+    // 確保小於等於1200px 時移除任何 JS click 翻牌
+    document.addEventListener("DOMContentLoaded", function() {
+      function updateFlipState() {
+        const disableFlip = window.innerWidth <= 1200;
+        document.querySelectorAll(".card").forEach(card => {
+          if (disableFlip) {
+            card.classList.add("no-flip");
+            // 移除點擊事件
+            card.replaceWith(card.cloneNode(true));
+          } else {
+            card.classList.remove("no-flip");
+          }
+        });
+      }
+      updateFlipState();
+      window.addEventListener("resize", updateFlipState);
+    });
+  </script>
+</body>
+</html>
